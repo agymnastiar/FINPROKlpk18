@@ -1,4 +1,4 @@
-pandas==2.1.0
+pandas<2.0
 fastavro==1.4.6
 scikit-learn==0.24.2
 python-snappy

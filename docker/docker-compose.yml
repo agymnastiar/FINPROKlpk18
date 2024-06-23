@@ -1,6 +1,9 @@
 version: '3.7'
 services:
   airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile  # pastikan Anda menunjuk ke Dockerfile yang telah dibuat
     image: dataeng-dibimbing/airflow
     container_name: ${AIRFLOW_CONTAINER_NAME}
     hostname: ${AIRFLOW_HOST_NAME}
@@ -22,6 +25,12 @@ services:
     ports:
       - "${METABASE_PORT}:3000"
     restart: always
+    environment:
+      - DW_POSTGRES_URI=${DW_POSTGRES_URI}
+      - MB_USER_EMAIL=${METABASE_USER_EMAIL}
+      - MB_USER_PASSWORD=${METABASE_USER_PASSWORD}
+      - MB_USER_FIRST_NAME=${METABASE_USER_FIRST_NAME}
+      - MB_USER_LAST_NAME=${METABASE_USER_LAST_NAME}
   
   metabase-setup:
     image: bash:5.1.16
