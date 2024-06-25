@@ -1,0 +1,136 @@
+TOTAL SALES
+SELECT
+    SUM(total_sales) AS total_sales_per_day
+FROM
+    sales_by_product_category
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    tanggal
+ORDER BY
+    tanggal;
+
+TOTAL UNIT SOLD
+SELECT
+    SUM(total_units_sold) AS total_units_sold_per_day
+FROM
+    product_sales_trend
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    tanggal
+ORDER BY
+    tanggal;
+
+Sales by Product Category
+SELECT
+    category_name AS Category,
+    SUM(total_sales) AS TotalSales
+FROM
+    sales_by_product_category
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    category_name
+ORDER BY
+    category_name;
+
+Top 10 Product Sales
+SELECT
+    product_name,
+    SUM(total_sales) AS total_sales_per_product
+FROM
+    product_sales_trend
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    product_name
+ORDER BY
+    total_sales_per_product DESC
+LIMIT 10;
+
+Detail
+SELECT
+    tanggal,
+    product_id,
+    product_name,
+    SUM(total_sales) AS total_sales_per_product
+FROM
+    product_sales_trend
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    tanggal, product_id, product_name
+ORDER BY
+    total_sales_per_product DESC
+LIMIT 10;
+
+Regional Sales Performance
+SELECT
+    country AS Country,
+    latitude AS Latitude,
+    longitude AS Longitude,
+    SUM(total_sales) AS TotalSales
+FROM
+    regional_sales_performance
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    country, latitude, longitude
+ORDER BY
+    country;
+
+Top 5 Supplier
+SELECT
+    supplier_id,
+    country,
+    SUM(total_supplied_value) AS total_supplied_value
+FROM
+    supplier_performance 
+JOIN
+    suppliers ON supplier_id = id
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    supplier_id, country
+ORDER BY
+    total_supplied_value DESC
+LIMIT 5;
+
+Top 5 Customer
+SELECT
+    customer_id,
+    first_name,
+    SUM(purchase_count) AS total_purchase_count
+FROM
+    customer_purchase_behavior
+WHERE
+    tanggal = {{tanggal}}
+GROUP BY
+    customer_id, first_name
+ORDER BY
+    total_purchase_count DESC
+LIMIT 5;
+
+
+Predicted Sales for March 22, 2023
+SELECT
+    sales_date,
+    SUM(predicted_sales) AS predicted_sales
+FROM
+    predicted_sales
+GROUP BY
+    sales_date
+ORDER BY
+    sales_date;
+
+
+
+
+
+
+
+
+
+
+
